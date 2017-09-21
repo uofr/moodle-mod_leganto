@@ -107,13 +107,13 @@ div.legantobox h5.sectionheading, div.legantobox h6.sectionheading {
 
 #page-mod-leganto-view ul.citations, div.legantobox ul.citations {
     margin-left: 1em;
-    list-style-type: none !important;
 }
 
 #page-mod-leganto-view ul.citations li.citation, div.legantobox ul.citations li.citation {
     line-height: 1.5em;
     padding: 6px 0;
     border-bottom: 1px solid #E3E3E3;
+    list-style-type: none !important;
 }
 
 #page-mod-leganto-view ul.citations li.citation:last-child, div.legantobox ul.citations li.citation:last-child {
