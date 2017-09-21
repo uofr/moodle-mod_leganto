@@ -66,7 +66,7 @@ installation script and make the necessary database changes.
 
 Updating Moodle
 ---------------
-If you installed Moodle and the Leganto resource list module from Git you can
+If you installed Moodle and the Leganto reading list module from Git you can
 run the following commands to update both (see
 http://docs.moodle.org/33/en/Git_for_Administrators#Installing_a_contributed_extension_from_its_Git_repository):
 $ cd /path/to/your/moodle/

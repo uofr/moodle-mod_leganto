@@ -80,7 +80,7 @@ class mod_leganto_mod_form extends moodleform_mod {
 
         $this->standard_intro_elements();
 
-        // Resource selection section.
+        // Citation selection section.
         if ($lists = $this->leganto->get_lists($this->leganto->get_course())) {
             $this->setup_list_elements($mform, $lists);
         } else {
@@ -109,7 +109,7 @@ class mod_leganto_mod_form extends moodleform_mod {
     }
 
     /**
-     * Set up the config form elements for the Leganto resource lists associated with this course.
+     * Set up the config form elements for the Leganto reading lists associated with this course.
      *
      * @param mod_leganto_mod_form $mform The config form.
      * @param array $lists The Leganto lists to set up.
@@ -143,7 +143,7 @@ class mod_leganto_mod_form extends moodleform_mod {
             }
         }
 
-        // If only one resource list was found, expand its fieldset automatically.
+        // If only one reading list was found, expand its fieldset automatically.
         if (count($lists) == 1) {
             $mform->setExpanded('list-0', true);
         }

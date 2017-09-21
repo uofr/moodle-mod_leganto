@@ -287,7 +287,7 @@ class leganto {
     /**
      * Get the name of the current module.
      *
-     * @return string The module name (Leganto resource list).
+     * @return string The module name (Leganto reading list).
      */
     protected function get_module_name() {
         if (isset(self::$modulename)) {
@@ -301,7 +301,7 @@ class leganto {
     /**
      * Get the plural name of the current module.
      *
-     * @return string The module name plural (Leganto resource lists).
+     * @return string The module name plural (Leganto reading lists).
      */
     protected function get_module_name_plural() {
         if (isset(self::$modulenameplural)) {
@@ -406,7 +406,7 @@ class leganto {
      * @param int $method The API method to call.
      * @param string $q An Alma course search query string.
      * @param string $courseid The identifier of an Alma course.
-     * @param string $listid The identifier of a resource list.
+     * @param string $listid The identifier of a reading list.
      * @param string $citationid The identifier of a citation.
      * @param array $params An array of additional params to pass.
      * @param bool $cached Whether to return cached data instead (if available).
@@ -618,10 +618,10 @@ class leganto {
     }
 
     /**
-     * Retrieve all Leganto resource lists associated with the current course.
+     * Retrieve all Leganto reading lists associated with the current course.
      *
      * @param stdClass $course The data for the current course.
-     * @return array An array of Leganto resource list objects.
+     * @return array An array of Leganto reading list objects.
      */
     public function get_lists($course) {
         $adminconfig = $this->get_admin_config();
@@ -672,7 +672,7 @@ class leganto {
     }
 
     /**
-     * Retrieve the specified Leganto resource list data from the Alma API.
+     * Retrieve the specified Leganto reading list data from the Alma API.
      *
      * @param string $courseid The identifier of the parent Alma course.
      * @param string $listid The identifier of the required Leganto list.
@@ -688,9 +688,9 @@ class leganto {
     }
 
     /**
-     * Fetch the data for a Leganto resource list section, given a list object and a section identifier.
+     * Fetch the data for a Leganto reading list section, given a list object and a section identifier.
      *
-     * @param stdClass $list A JSON object containing the resource list data.
+     * @param stdClass $list A JSON object containing the reading list data.
      * @param string $sectionid The identifier of the required section.
      * @return stdClass|bool An object containing the section data, or false.
      */
@@ -721,9 +721,9 @@ class leganto {
     }
 
     /**
-     * Fetch the data for a Leganto citation, given a resource list object and a citation identifier.
+     * Fetch the data for a Leganto citation, given a reading list object and a citation identifier.
      *
-     * @param stdClass $list A JSON object containing the resource list data.
+     * @param stdClass $list A JSON object containing the reading list data.
      * @param string $citationid The identifier of the required citation.
      * @param string $parentpath A path comprising the course, list and section identifiers.
      * @return stdClass|bool An object containing the citation data, or false.
@@ -839,7 +839,7 @@ class leganto {
      * structure of the selection, and use this to generate the HTML output to display the custom list.
      *
      * @param string $citations A comma separated list of selected citations.
-     * @return string The final HTML output to display the custom resource list.
+     * @return string The final HTML output to display the custom reading list.
      */
     public function get_list_html($citations) {
         if (empty($citations)) {
@@ -891,7 +891,7 @@ class leganto {
      * Given a list's JSON object and an array representing a tree structure of the selected citations
      * and their parent sections, recursively assemble the HTML to display the custom list.
      *
-     * @param stdClass $list A JSON object containing the resource list data.
+     * @param stdClass $list A JSON object containing the reading list data.
      * @param array $elements A tree structure representing the selected citations by section.
      * @param string $html The HTML output that has been generated from previous iterations.
      * @param bool $wascitation Whether or not the previous element was a citation.
@@ -948,7 +948,7 @@ class leganto {
     /**
      * Given a list object and a section identifier, return the section heading and details as HTML.
      *
-     * @param stdClass $list A JSON object containing the resource list data.
+     * @param stdClass $list A JSON object containing the reading list data.
      * @param string $sectionid The identifier of the required section.
      * @param int $citationcount A count of citations belonging to the section.
      * @return string The HTML output for the section heading and details.
@@ -982,7 +982,7 @@ class leganto {
     /**
      * Given a list object and a citation identifier, return the citation link and details as HTML.
      *
-     * @param stdClass $list A JSON object containing the resource list data.
+     * @param stdClass $list A JSON object containing the reading list data.
      * @param string $citationid The identifier of the required citation.
      * @return string An HTML list item containing the citation link and details.
      */

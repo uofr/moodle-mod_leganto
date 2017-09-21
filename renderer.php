@@ -59,7 +59,7 @@ class mod_leganto_renderer extends plugin_renderer_base {
             $viewlink = (string) $cm->url;
             $listid = $cm->modname . '-' . $cm->id;
 
-            // YUI function to hide inline resource list until user clicks 'view' link.
+            // YUI function to hide inline reading list until user clicks 'view' link.
             $this->page->requires->js_init_call('M.mod_leganto.init_list', array($cm->id, $viewlink));
             $output .= $this->output->box($this->render($legantolist), 'generalbox legantobox', $listid);
         } else {
