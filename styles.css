@@ -151,6 +151,7 @@ div.legantobox ul.citations li.citation span.citationtag {
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
+    box-shadow: 1px 1px 1px rgba(0,0,0, 0.25);
 }
 
 #page-mod-leganto-view ul.citations li.citation a.citationsource, div.legantobox ul.citations li.citation a.citationsource {
