@@ -160,15 +160,12 @@ class mod_leganto_mod_form extends moodleform_mod {
         $adminconfig = $this->leganto->get_admin_config();
 
         // Pre-select previously selected citations if this is an update.
+        $default = 0;
         if ($config = $this->leganto->get_instance_config()) {
             $citations = explode(',', $config);
             if (in_array($citation->path, $citations)) {
                 $default = 1;
-            } else {
-                $default = 0;
             }
-        } else {
-            $default = 0;
         }
 
         $label = $citation->title;
