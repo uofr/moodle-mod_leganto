@@ -69,7 +69,7 @@ class mod_leganto_mod_form extends moodleform_mod {
         // General section.
         $mform->addElement('header', 'general', get_string('general', 'form'));
 
-        $mform->addElement('text', 'name', get_string('legantoname', 'leganto'), array('size' => '64'));
+        $mform->addElement('text', 'name', get_string('listname', 'leganto'), array('size' => '64'));
         if (!empty($CFG->formatstringstriptags)) {
             $mform->setType('name', PARAM_TEXT);
         } else {
@@ -84,9 +84,9 @@ class mod_leganto_mod_form extends moodleform_mod {
         if ($lists = $this->leganto->get_lists($this->leganto->get_course())) {
             $this->setup_list_elements($mform, $lists);
         } else {
-            $strcourse = get_string('course');
-            $nolegantos = $OUTPUT->heading(get_string('nolegantos', 'leganto', $strcourse), 3, 'warning');
-            $mform->addElement('html', $nolegantos);
+            $strcourse = strtolower(get_string('course'));
+            $nolists = $OUTPUT->heading(get_string('nolists', 'leganto', $strcourse), 3, 'warning');
+            $mform->addElement('html', $nolists);
         }
 
         // Appearance section.
