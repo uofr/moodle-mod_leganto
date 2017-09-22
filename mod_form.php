@@ -47,7 +47,7 @@ class mod_leganto_mod_form extends moodleform_mod {
      * @return void
      */
     public function definition() {
-        global $CFG, $DB, $OUTPUT;
+        global $CFG, $DB;
         $mform = $this->_form;
 
         $ctx = null;
@@ -63,8 +63,6 @@ class mod_leganto_mod_form extends moodleform_mod {
             $course = $DB->get_record('course', array('id' => $this->current->course), '*', MUST_EXIST);
             $this->leganto->set_course($course);
         }
-
-        $config = get_config('leganto');
 
         // General section.
         $mform->addElement('header', 'general', get_string('general', 'form'));
@@ -85,11 +83,13 @@ class mod_leganto_mod_form extends moodleform_mod {
             $this->setup_list_elements($mform, $lists);
         } else {
             $strcourse = strtolower(get_string('course'));
-            $nolists = $OUTPUT->heading(get_string('nolists', 'leganto', $strcourse), 3, 'warning');
+            $nolists = html_writer::div(get_string('nolists', 'leganto', $strcourse), 'alert alert-warning');
             $mform->addElement('html', $nolists);
         }
 
         // Appearance section.
+        $adminconfig = $this->leganto->get_admin_config();
+
         $mform->addElement('header', 'appearance', get_string('appearance'));
         $mform->setExpanded('appearance', true);
 
@@ -99,7 +99,7 @@ class mod_leganto_mod_form extends moodleform_mod {
                     LEGANTO_DISPLAY_INLINE => get_string('displayinline', 'leganto')
                 ));
         $mform->addHelpButton('display', 'display', 'leganto');
-        $mform->setDefault('display', $config->defaultdisplay);
+        $mform->setDefault('display', $adminconfig->defaultdisplay);
 
         // Common elements section.
         $this->standard_coursemodule_elements();
@@ -111,7 +111,7 @@ class mod_leganto_mod_form extends moodleform_mod {
     /**
      * Set up the config form elements for the Leganto reading lists associated with this course.
      *
-     * @param mod_leganto_mod_form $mform The config form.
+     * @param MoodleQuickForm $mform The config form.
      * @param array $lists The Leganto lists to set up.
      */
     private function setup_list_elements(&$mform, $lists) {
@@ -152,7 +152,7 @@ class mod_leganto_mod_form extends moodleform_mod {
     /**
      * Set up the config form elements for the given Leganto citation object.
      *
-     * @param mod_leganto_mod_form $mform The config form.
+     * @param MoodleQuickForm $mform The config form.
      * @param int $checkboxgrp The current checkbox group id.
      * @param stdClass $citation The citation data to set up.
      */
