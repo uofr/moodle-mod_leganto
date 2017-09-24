@@ -458,13 +458,14 @@ class leganto {
         $adminconfig = $this->get_admin_config();
         $path = '/almaws/v1/courses';
 
+        // Create a cache object to store Alma data.
+        $cache = cache::make('mod_leganto', 'listdata');
+
         if ($method == ALMA_GET_COURSES) {
             $params['q'] = $q;
+            $cachedid = $q;
         } else {
             $path .= '/' . $courseid;
-
-            // Create a cache object to store Alma data.
-            $cache = cache::make('mod_leganto', 'listdata');
             $cachedid = $courseid;
 
             if ($method == ALMA_GET_LIST || $method == ALMA_GET_CITATION) {
@@ -526,6 +527,7 @@ class leganto {
         if ($json = $cache->get($cachedid)) {
             return $json;
         }
+        debugging('Alma API and cached data unavailable.', DEBUG_DEVELOPER);
 
         return false;
     }
@@ -697,6 +699,10 @@ class leganto {
     public function get_section_data($list, $sectionid) {
         $citationcount = 0;
 
+        if (empty($list->citations->citation)) {
+            return false;
+        }
+
         foreach ($list->citations->citation as $citation) {
             if ($citation->section_info->id != $sectionid) {
                 continue;
@@ -730,6 +736,10 @@ class leganto {
      */
     public function get_citation_data($list, $citationid, $parentpath = '') {
         global $OUTPUT;
+
+        if (empty($list->citations->citation)) {
+            return false;
+        }
 
         foreach ($list->citations->citation as $citation) {
             if ($citation->id != $citationid) {
