@@ -130,7 +130,7 @@ class mod_leganto_mod_form extends moodleform_mod {
                     $sectionid = $citation->section_info->id;
                     if ($sectionhtml = $this->leganto->get_section_html($list, $sectionid)) {
                         $mform->addElement('html', $sectionhtml);
-                        $this->add_checkbox_controller($checkboxgrp, null, null, 0);
+                        $this->add_checkbox_controller($checkboxgrp);
                         $checkboxgrp++;
                     }
                 }
@@ -169,10 +169,13 @@ class mod_leganto_mod_form extends moodleform_mod {
         }
 
         $label = $citation->title;
+        if (!empty($citation->permalink)) {
+            $label .= ' ' . $citation->permalink;
+        }
         if (!empty($adminconfig->authorsinconfig) && !empty($citation->author)) {
             $label .= html_writer::empty_tag('br') . $citation->author;
         }
-        $mform->addElement('advcheckbox', $citation->path, $label, null, array('group' => $checkboxgrp - 1));
+        $mform->addElement('advcheckbox', $citation->path, null, $label, array('group' => $checkboxgrp - 1));
         $mform->setDefault($citation->path, $default);
     }
 

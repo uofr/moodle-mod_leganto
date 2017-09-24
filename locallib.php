@@ -752,8 +752,8 @@ class leganto {
                 $permalink = str_replace('auth=local', 'auth=SAML', $citation->leganto_permalink);
                 $linkaction = new popup_action('click', $permalink, 'popup', array('width' => 1024, 'height' => 768));
                 $linktitle = get_string('viewcitation', 'leganto');
-                $citation->title = $OUTPUT->action_link($permalink, $citation->title, $linkaction,
-                        array('class' => 'citationlink', 'title' => $linktitle));
+                $citation->permalink = $OUTPUT->action_link($permalink, ' ', $linkaction,
+                        array('class' => 'fa fa-external-link citationlink', 'title' => $linktitle));
             }
 
             if (!empty($citation->metadata->author)) {
@@ -997,6 +997,8 @@ class leganto {
      * @return string An HTML list item containing the citation link and details.
      */
     private function get_citation_html($list, $citationid) {
+        global $OUTPUT;
+
         if (!$citation = $this->get_citation_data($list, $citationid)) {
             return '';
         }
@@ -1005,7 +1007,10 @@ class leganto {
         if (!empty($citation->source)) {
             $html .= $citation->source;
         }
-        $html .= html_writer::div($citation->title);
+        $html .= $OUTPUT->heading($citation->title, 4, 'citationheading');
+        if (!empty($citation->permalink)) {
+            $html .= html_writer::span(' ' . $citation->permalink, 'fa-lg');
+        }
 
         $html .= html_writer::start_div();
         if (!empty($citation->author)) {
