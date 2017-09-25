@@ -35,7 +35,7 @@ M.mod_leganto.init_list = function(Y, cmid, url) {
             left: '-600px',
             duration: 0.2,
             easing: 'ease-out',
-            on: { start: setRelativePosition }
+            on: {start: setRelativePosition}
         };
         Y.Transition.fx.slideFadeIn = {
             opacity: 1.0,
@@ -43,7 +43,7 @@ M.mod_leganto.init_list = function(Y, cmid, url) {
             left: '0px',
             duration: 0.2,
             easing: 'ease-in',
-            on: { start: setRelativePosition }
+            on: {start: setRelativePosition}
         };
 
         var listid = '#leganto-' + cmid,
@@ -72,19 +72,8 @@ M.mod_leganto.init_list = function(Y, cmid, url) {
 
                     if (arrow.hasClass('collapsed')) {
                         // Send AJAX request for view.php (to trigger log/completion events).
-                        if (window.XMLHttpRequest) {
-                            httpRequest = new XMLHttpRequest();
-                        } else if (window.ActiveXObject) {
-                            try {
-                                httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
-                            }
-                            catch (e) {
-                                try {
-                                    httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
-                                }
-                                catch (e) {}
-                            }
-                        }
+                        var httpRequest = new XMLHttpRequest();
+
                         // Parse the response and check for errors.
                         function checkResponse() {
                             if (httpRequest.readyState === 4) {
