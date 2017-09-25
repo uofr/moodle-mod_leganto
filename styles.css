@@ -67,7 +67,7 @@
 #page-mod-leganto-mod .mform fieldset[id^="id_list-"] .fitem label h5.citationtitle {
     display: inline;
     font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif;
-    font-size: 1.1em;
+    font-size: 1.0em;
 }
 
 div.legantobox {
@@ -108,7 +108,7 @@ div.legantobox ul.citations li.citation {
 
 #page-mod-leganto-view ul.citations li.citation:last-child,
 div.legantobox ul.citations li.citation:last-child {
-    border-bottom: none;
+    border-bottom: none !important;
 }
 
 #page-mod-leganto-view ul.citations li.citation + li.citation,
@@ -123,7 +123,7 @@ div.legantobox ul.citations li.citation h5.citationtitle {
 
 div.legantobox ul.citations li.citation h5.citationtitle {
     font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif;
-    font-size: 1.2em;
+    font-size: 1.0em;
 }
 
 #page-mod-leganto-view ul.citations li.citation a.citationlink,
