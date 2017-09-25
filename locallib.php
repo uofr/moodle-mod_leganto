@@ -732,9 +732,10 @@ class leganto {
      * @param stdClass $list A JSON object containing the reading list data.
      * @param string $citationid The identifier of the required citation.
      * @param string $parentpath A path comprising the course, list and section identifiers.
+     * @param int $display The list display mode (inline or separate page).
      * @return stdClass|bool An object containing the citation data, or false.
      */
-    public function get_citation_data($list, $citationid, $parentpath = '') {
+    public function get_citation_data($list, $citationid, $parentpath = '', $display = LEGANTO_DISPLAY_INLINE) {
         global $OUTPUT;
 
         if (empty($list->citations->citation)) {
@@ -747,13 +748,15 @@ class leganto {
             }
 
             $title = !empty($citation->metadata->title) ? $citation->metadata->title : $citation->metadata->article_title;
-            $citation->title = html_writer::span($title, 'citationtitle');
+            $headinglevel = $display == LEGANTO_DISPLAY_PAGE ? 4 : 5;
+            $citation->title = $OUTPUT->heading($title, $headinglevel, 'citationtitle');
             if (!empty($citation->leganto_permalink)) {
                 $permalink = str_replace('auth=local', 'auth=SAML', $citation->leganto_permalink);
                 $linkaction = new popup_action('click', $permalink, 'popup', array('width' => 1024, 'height' => 768));
                 $linktitle = get_string('viewcitation', 'leganto');
+                $linkclass = $display == LEGANTO_DISPLAY_PAGE ? ' fa-lg' : '';
                 $citation->permalink = $OUTPUT->action_link($permalink, ' ', $linkaction,
-                        array('class' => 'fa fa-external-link citationlink', 'title' => $linktitle));
+                        array('class' => 'fa fa-external-link citationlink' . $linkclass, 'title' => $linktitle));
             }
 
             if (!empty($citation->metadata->author)) {
@@ -849,9 +852,10 @@ class leganto {
      * structure of the selection, and use this to generate the HTML output to display the custom list.
      *
      * @param string $citations A comma separated list of selected citations.
+     * @param int $display The list display mode (inline or separate page).
      * @return string The final HTML output to display the custom reading list.
      */
-    public function get_list_html($citations) {
+    public function get_list_html($citations, $display) {
         if (empty($citations)) {
             return '';
         }
@@ -871,7 +875,7 @@ class leganto {
 
                 // Fetch list data, from cache if available.
                 $listdata = $this->get_list_data($courseid, $listid, true);
-                $html .= $this->build_list_elements($listdata, $listtree);
+                $html .= $this->build_list_elements($listdata, $listtree, $display);
             }
         }
 
@@ -903,11 +907,12 @@ class leganto {
      *
      * @param stdClass $list A JSON object containing the reading list data.
      * @param array $elements A tree structure representing the selected citations by section.
+     * @param int $display The configured display mode for the list (inline or separate page).
      * @param string $html The HTML output that has been generated from previous iterations.
      * @param bool $wascitation Whether or not the previous element was a citation.
      * @return string The HTML output for the custom list.
      */
-    private function build_list_elements($list, $elements, &$html = '', $wascitation = false) {
+    private function build_list_elements($list, $elements, $display, &$html = '', $wascitation = false) {
         foreach ($elements as $elementkey => $element) {
             if (preg_match($this->sectionidregex, $elementkey)) {
                 // This is a section.
@@ -919,14 +924,14 @@ class leganto {
 
                 // Open a section container and output the heading details.
                 $html .= html_writer::start_div('listsection', array('id' => $sectionid));
-                $html .= $this->get_section_html($list, $sectionid, count($element));
+                $html .= $this->get_section_html($list, $sectionid, $display, count($element));
 
                 // Remember that this was a section heading.
                 $wascitation = false;
 
                 // Then process any sub-elements it contains.
                 if (is_array($element)) {
-                    $this->build_list_elements($list, $element, $html);
+                    $this->build_list_elements($list, $element, $display, $html, $wascitation);
                 }
 
                 // Close the section container.
@@ -940,7 +945,7 @@ class leganto {
                 }
 
                 // Output the citation details.
-                $html .= $this->get_citation_html($list, $citationid);
+                $html .= $this->get_citation_html($list, $citationid, $display);
 
                 // Remember that this was a citation.
                 $wascitation = true;
@@ -960,10 +965,11 @@ class leganto {
      *
      * @param stdClass $list A JSON object containing the reading list data.
      * @param string $sectionid The identifier of the required section.
+     * @param int $display The list display mode (inline or separate page).
      * @param int $citationcount A count of citations belonging to the section.
      * @return string The HTML output for the section heading and details.
      */
-    public function get_section_html($list, $sectionid, $citationcount = null) {
+    public function get_section_html($list, $sectionid, $display = LEGANTO_DISPLAY_INLINE, $citationcount = null) {
         global $OUTPUT;
 
         if (!$section = $this->get_section_data($list, $sectionid)) {
@@ -982,7 +988,8 @@ class leganto {
         }
 
         $headingstr = get_string('sectionheading', 'leganto', array('name' => $section->name, 'count' => $countspan));
-        $heading = $OUTPUT->heading($headingstr, 3, 'sectionheading');
+        $headinglevel = $display == LEGANTO_DISPLAY_PAGE ? 3 : 4;
+        $heading = $OUTPUT->heading($headingstr, $headinglevel, 'sectionheading');
         $description = !empty($section->description) ? $section->description : '';
         $html = $heading . $description;
 
@@ -994,12 +1001,11 @@ class leganto {
      *
      * @param stdClass $list A JSON object containing the reading list data.
      * @param string $citationid The identifier of the required citation.
+     * @param int $display The list display mode (inline or separate page).
      * @return string An HTML list item containing the citation link and details.
      */
-    private function get_citation_html($list, $citationid) {
-        global $OUTPUT;
-
-        if (!$citation = $this->get_citation_data($list, $citationid)) {
+    private function get_citation_html($list, $citationid, $display) {
+        if (!$citation = $this->get_citation_data($list, $citationid, '', $display)) {
             return '';
         }
 
@@ -1007,9 +1013,9 @@ class leganto {
         if (!empty($citation->source)) {
             $html .= $citation->source;
         }
-        $html .= $OUTPUT->heading($citation->title, 4, 'citationheading');
+        $html .= $citation->title;
         if (!empty($citation->permalink)) {
-            $html .= html_writer::span(' ' . $citation->permalink, 'fa-lg');
+            $html .= ' ' . $citation->permalink;
         }
 
         $html .= html_writer::start_div();

@@ -27,7 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 class mod_leganto_renderer extends plugin_renderer_base {
 
     /**
-     * Returns html to display the content of mod_leganto.
+     * Return the HTML to display the content of the customised reading list.
      *
      * @param stdClass $leganto Record from 'leganto' table.
      * @return string
@@ -45,7 +45,7 @@ class mod_leganto_renderer extends plugin_renderer_base {
         }
 
         if (trim($leganto->intro)) {
-            if ($leganto->display != LEGANTO_DISPLAY_INLINE) {
+            if ($leganto->display == LEGANTO_DISPLAY_PAGE) {
                 $output .= $this->output->box(format_module_intro('leganto', $leganto, $cm->id),
                         'generalbox', 'intro');
             } else if ($cm->showdescription) {
@@ -69,13 +69,19 @@ class mod_leganto_renderer extends plugin_renderer_base {
         return $output;
     }
 
+    /**
+     * Render the HTML for the customised reading list.
+     *
+     * @param \leganto_list $list The list data.
+     * @return string The HTML to render the list.
+     */
     public function render_leganto_list(leganto_list $list) {
         global $CFG;
 
         require_once($CFG->dirroot . '/mod/leganto/locallib.php');
 
         $leganto = new leganto($list->context, $list->cm, null);
-        $output = $leganto->get_list_html($list->leganto->citations);
+        $output = $leganto->get_list_html($list->leganto->citations, $list->leganto->display);
 
         return $output;
     }
