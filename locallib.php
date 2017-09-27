@@ -813,18 +813,21 @@ class leganto {
      * Extract all selected citations from submitted leganto module config form data and return as a comma separated list.
      *
      * @param stdClass $formdata The config form data submitted.
-     * @return string A comma separated list of selected citations.
+     * @return string A JSON encoded list of selected citations.
      */
     public function get_citations($formdata) {
         $citationpathregex = '/^course-[0-9]{16}_list-[0-9]{16}_section-[0-9]{16}_citation-[0-9]{16}$/';
 
-        $citations = array();
+        $selected = array();
         foreach ($formdata as $name => $value) {
             if (preg_match($citationpathregex, $name) && $value == 1) {
-                $citations[] = $name;
+                $path = $this->explode_citation_path($name);
+                $selected = array_merge_recursive($selected, $path);
             }
         }
-        $citations = implode(',', $citations);
+        if (!$citations = json_encode($selected)) {
+            return '';
+        }
 
         return $citations;
     }
@@ -832,39 +835,46 @@ class leganto {
     /**
      * Fetch the list of previously selected citations for the current leganto instance.
      *
-     * @return string A comma separated list of citation paths.
+     * @return array A list of citation paths.
      */
-    public function get_instance_config() {
+    public function get_selected_citations() {
         global $DB;
 
         if (!$coursemodule = $this->get_course_module()) {
-            return '';
+            return array();
         }
         if (!$config = $DB->get_field('leganto', 'citations', array('id' => $coursemodule->instance))) {
-            return '';
+            return array();
+        }
+        if (!$tree = json_decode($config)) {
+            return array();
         }
 
-        return $config;
+        $paths = array();
+        foreach ($tree as $coursekey => $coursetree) {
+            foreach ($coursetree as $listkey => $listtree) {
+                foreach ($listtree as $sectionkey => $citations) {
+                    foreach ($citations as $citation) {
+                        $paths[] = $coursekey . '_' . $listkey . '_' . $sectionkey . '_' . $citation;
+                    }
+                }
+            }
+        }
+
+        return $paths;
     }
 
     /**
-     * Given a comma separated list of selected citations, construct an array representing a tree
+     * Given a JSON encoded list of selected citations, construct an array representing a tree
      * structure of the selection, and use this to generate the HTML output to display the custom list.
      *
-     * @param string $citations A comma separated list of selected citations.
+     * @param string $citations A JSON encoded list of selected citations.
      * @param int $display The list display mode (inline or separate page).
      * @return string The final HTML output to display the custom reading list.
      */
     public function get_list_html($citations, $display) {
-        if (empty($citations)) {
+        if (empty($citations) or !$tree = json_decode($citations)) {
             return '';
-        }
-
-        $tree = array();
-        $citations = explode(',', $citations);
-        foreach ($citations as $citation) {
-            $path = $this->explode_citation_path($citation);
-            $tree = array_merge_recursive($tree, $path);
         }
 
         $html = '';
@@ -906,7 +916,7 @@ class leganto {
      * and their parent sections, recursively assemble the HTML to display the custom list.
      *
      * @param stdClass $list A JSON object containing the reading list data.
-     * @param array $elements A tree structure representing the selected citations by section.
+     * @param mixed $elements A tree structure representing the selected citations by section.
      * @param int $display The configured display mode for the list (inline or separate page).
      * @param string $html The HTML output that has been generated from previous iterations.
      * @param bool $wascitation Whether or not the previous element was a citation.

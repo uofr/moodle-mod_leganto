@@ -118,6 +118,9 @@ class mod_leganto_mod_form extends moodleform_mod {
         $listindex = 0;
         $checkboxgrp = 1;
 
+        // Get a list of previously selected citations for updates.
+        $selected = $this->leganto->get_selected_citations();
+
         foreach ($lists as $list) {
             $mform->addElement('header', 'list-' . $listindex, get_string('selectcitations', 'leganto', $list->name));
             $mform->setExpanded('list-' . $listindex, false);
@@ -138,7 +141,7 @@ class mod_leganto_mod_form extends moodleform_mod {
                 // Fetch citation data and set up its elements.
                 $parentpath = 'course-' . $list->courseid . '_list-' . $list->id . '_section-' . $sectionid;
                 if ($citationdata = $this->leganto->get_citation_data($list, $citation->id, $parentpath)) {
-                    $this->setup_citation_elements($mform, $checkboxgrp, $citationdata);
+                    $this->setup_citation_elements($mform, $checkboxgrp, $citationdata, $selected);
                 }
             }
         }
@@ -155,15 +158,15 @@ class mod_leganto_mod_form extends moodleform_mod {
      * @param MoodleQuickForm $mform The config form.
      * @param int $checkboxgrp The current checkbox group id.
      * @param stdClass $citation The citation data to set up.
+     * @param array $selected A list of previously selected citations.
      */
-    private function setup_citation_elements(&$mform, $checkboxgrp, $citation) {
+    private function setup_citation_elements(&$mform, $checkboxgrp, $citation, $selected) {
         $adminconfig = $this->leganto->get_admin_config();
 
         // Pre-select previously selected citations if this is an update.
         $default = 0;
-        if ($config = $this->leganto->get_instance_config()) {
-            $citations = explode(',', $config);
-            if (in_array($citation->path, $citations)) {
+        if (!empty($selected)) {
+            if (in_array($citation->path, $selected)) {
                 $default = 1;
             }
         }
