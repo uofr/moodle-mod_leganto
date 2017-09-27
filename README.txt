@@ -33,6 +33,9 @@ visibility).
 Changelog
 ---------
 
+2017-09-27  v3.3.0
+  * Initial stable release
+
 
 Installation
 ------------
