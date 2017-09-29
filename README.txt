@@ -33,7 +33,7 @@ visibility).
 Changelog
 ---------
 
-2017-09-27  v3.3.0
+2017-09-29  v3.1.0, v3.3.0
   * Initial stable release
 
 
