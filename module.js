@@ -24,8 +24,13 @@
 
 M.mod_leganto = {};
 
-M.mod_leganto.init_list = function(Y, cmid, url) {
+M.mod_leganto.initList = function(Y, cmid, url) {
     Y.use('node', 'transition', function(Y) {
+        /**
+         * Set relative position style for a list node.
+         *
+         * @method setRelativePosition
+         */
         function setRelativePosition() {
             this.setStyle('position', 'relative');
         }
@@ -75,21 +80,24 @@ M.mod_leganto.init_list = function(Y, cmid, url) {
                         var httpRequest = new XMLHttpRequest();
 
                         // Parse the response and check for errors.
-                        function checkResponse() {
+                        httpRequest.onreadystatechange = function() {
                             if (httpRequest.readyState === 4) {
                                 var data = Y.JSON.parse(httpRequest.responseText);
-                                if (data.hasOwnProperty('error')) { // Alert user if an error has occurred.
-                                    alert(data.error);
+                                if (data.hasOwnProperty('error')) {
+                                    // Alert user if an error has occurred.
+                                    require(['core/notification'], function(notification) {
+                                        notification.alert('', data.error);
+                                    });
                                     window.location.href = url;
-                                } else { // If all is well, expand the list.
+                                } else {
+                                    // If all is well, expand the list.
                                     list.show('slideFadeIn');
                                     arrow.removeClass('collapsed');
                                     // Hide the JS loading icon.
                                     spinner.hide();
                                 }
                             }
-                        }
-                        httpRequest.onreadystatechange = checkResponse;
+                        };
                         httpRequest.open('GET', url);
                         httpRequest.setRequestHeader('X-Requested-With', 'xmlhttprequest');
                         httpRequest.send();

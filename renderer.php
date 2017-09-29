@@ -22,8 +22,17 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author     Tony Butler <a.butler4@lancaster.ac.uk>
  */
+
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Leganto module renderer class.
+ *
+ * @package    mod_leganto
+ * @copyright  2017 Lancaster University {@link http://www.lancaster.ac.uk/}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author     Tony Butler <a.butler4@lancaster.ac.uk>
+ */
 class mod_leganto_renderer extends plugin_renderer_base {
 
     /**
@@ -60,7 +69,7 @@ class mod_leganto_renderer extends plugin_renderer_base {
             $listid = $cm->modname . '-' . $cm->id;
 
             // YUI function to hide inline reading list until user clicks 'view' link.
-            $this->page->requires->js_init_call('M.mod_leganto.init_list', array($cm->id, $viewlink));
+            $this->page->requires->js_init_call('M.mod_leganto.initList', array($cm->id, $viewlink));
             $output .= $this->output->box($this->render($legantolist), 'generalbox legantobox', $listid);
         } else {
             $output .= $this->output->box($this->render($legantolist), 'generalbox', 'leganto');
@@ -72,7 +81,7 @@ class mod_leganto_renderer extends plugin_renderer_base {
     /**
      * Render the HTML for the customised reading list.
      *
-     * @param \leganto_list $list The list data.
+     * @param \leganto_list $list The list renderable.
      * @return string The HTML to render the list.
      */
     public function render_leganto_list(leganto_list $list) {
@@ -87,11 +96,31 @@ class mod_leganto_renderer extends plugin_renderer_base {
     }
 }
 
+/**
+ * Leganto list renderable class.
+ *
+ * @package    mod_leganto
+ * @copyright  2017 Lancaster University {@link http://www.lancaster.ac.uk/}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author     Tony Butler <a.butler4@lancaster.ac.uk>
+ */
 class leganto_list implements renderable {
+
+    /** @var context The context of the course module for this leganto_list instance. */
     public $context;
+
+    /** @var stdClass The leganto database record for this leganto_list instance. */
     public $leganto;
+
+    /** @var cm_info The course module info object for this leganto_list instance. */
     public $cm;
 
+    /**
+     * Constructor for the leganto_list class.
+     *
+     * @param stdClass $leganto The leganto record.
+     * @param cm_info $cm The course module info.
+     */
     public function __construct($leganto, $cm) {
         $this->leganto = $leganto;
         $this->cm = $cm;

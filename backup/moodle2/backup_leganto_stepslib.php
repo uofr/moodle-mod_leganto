@@ -18,6 +18,7 @@
  * Define all the backup steps that will be used by the backup_leganto_activity_task.
  *
  * @package    mod_leganto
+ * @category   backup
  * @copyright  2017 Lancaster University {@link http://www.lancaster.ac.uk/}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author     Tony Butler <a.butler4@lancaster.ac.uk>
@@ -27,9 +28,20 @@ defined('MOODLE_INTERNAL') || die();
 
 /**
  * Define the complete leganto structure for backup, with file and id annotations.
+ *
+ * @package    mod_leganto
+ * @category   backup
+ * @copyright  2017 Lancaster University {@link http://www.lancaster.ac.uk/}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author     Tony Butler <a.butler4@lancaster.ac.uk>
  */
 class backup_leganto_activity_structure_step extends backup_activity_structure_step {
 
+    /**
+     * Prepare the activity data.
+     *
+     * @return \backup_nested_element
+     */
     protected function define_structure() {
         // To know if we are including user info.
         $userinfo = $this->get_setting_value('userinfo');

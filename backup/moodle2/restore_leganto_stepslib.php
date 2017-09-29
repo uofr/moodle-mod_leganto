@@ -15,7 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Define all the restore steps that will be used by the restore_leganto_activity_task.
+ *
  * @package    mod_leganto
+ * @category   backup
  * @copyright  2017 Lancaster University {@link http://www.lancaster.ac.uk/}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author     Tony Butler <a.butler4@lancaster.ac.uk>
@@ -24,14 +27,21 @@
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Define all the restore steps that will be used by the restore_leganto_activity_task.
- */
-
-/**
  * Structure step to restore a leganto activity.
+ *
+ * @package    mod_leganto
+ * @category   backup
+ * @copyright  2017 Lancaster University {@link http://www.lancaster.ac.uk/}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author     Tony Butler <a.butler4@lancaster.ac.uk>
  */
 class restore_leganto_activity_structure_step extends restore_activity_structure_step {
 
+    /**
+     * Prepare the activity data.
+     *
+     * @return array
+     */
     protected function define_structure() {
         $paths = array();
         $paths[] = new restore_path_element('leganto', '/activity/leganto');
@@ -40,6 +50,11 @@ class restore_leganto_activity_structure_step extends restore_activity_structure
         return $this->prepare_activity_structure($paths);
     }
 
+    /**
+     * Restore the activity data.
+     *
+     * @param $data
+     */
     protected function process_leganto($data) {
         global $DB;
 
@@ -54,6 +69,9 @@ class restore_leganto_activity_structure_step extends restore_activity_structure
         $this->apply_activity_instance($newitemid);
     }
 
+    /**
+     * Post-restore tasks.
+     */
     protected function after_execute() {
         // Add leganto related files, no need to match by itemname (just internally handled context).
         $this->add_related_files('mod_leganto', 'intro', null);

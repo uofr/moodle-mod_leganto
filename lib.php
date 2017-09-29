@@ -74,7 +74,7 @@ function leganto_get_extra_capabilities() {
 /**
  * This function is used by the reset_course_userdata function in moodlelib.
  *
- * @param $data The data submitted from the reset course.
+ * @param object $data The data submitted from the reset course.
  * @return array Status array.
  */
 function leganto_reset_userdata($data) {
@@ -185,7 +185,7 @@ function leganto_page_type_list($pagetype, $parentcontext, $currentcontext) {
  * {@link leganto_cm_info_view()} do not need to do DB queries.
  *
  * @param cm_info $cm
- * @return cached_cm_info info
+ * @return cached_cm_info Cached course module info.
  */
 function leganto_get_coursemodule_info($cm) {
     global $DB;

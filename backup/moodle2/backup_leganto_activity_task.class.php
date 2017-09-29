@@ -30,6 +30,12 @@ require_once($CFG->dirroot . '/mod/leganto/backup/moodle2/backup_leganto_stepsli
 
 /**
  * Provides the steps to perform one complete backup of the leganto instance.
+ *
+ * @package    mod_leganto
+ * @category   backup
+ * @copyright  2017 Lancaster University {@link http://www.lancaster.ac.uk/}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author     Tony Butler <a.butler4@lancaster.ac.uk>
  */
 class backup_leganto_activity_task extends backup_activity_task {
 
