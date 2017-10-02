@@ -53,7 +53,7 @@ class restore_leganto_activity_structure_step extends restore_activity_structure
     /**
      * Restore the activity data.
      *
-     * @param $data
+     * @param object $data
      */
     protected function process_leganto($data) {
         global $DB;
