@@ -64,6 +64,7 @@
     display: inline;
     font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif;
     font-size: 1.0em;
+    font-weight: 600;
     color: #555;
 }
 
@@ -117,6 +118,7 @@ div.legantobox ul.citations li.citation h5.citationtitle {
 div.legantobox ul.citations li.citation h5.citationtitle {
     font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif;
     font-size: 1.0em;
+    font-weight: 600;
     color: #555;
 }
 
