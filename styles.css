@@ -146,6 +146,11 @@ div.legantobox ul.citations li.citation a.citationlink::before {
     vertical-align: -15%;
 }
 
+#page-mod-leganto-view ul.citations li.citation span.citationchapter,
+div.legantobox ul.citations li.citation span.citationchapter {
+    font-style: italic;
+}
+
 #page-mod-leganto-view ul.citations li.citation span.citationresourcetype,
 div.legantobox ul.citations li.citation span.citationresourcetype {
     font-size: 0.9em;

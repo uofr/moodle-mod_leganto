@@ -775,6 +775,10 @@ class leganto {
                 $citation->published = html_writer::span($citation->metadata->publication_date, 'citationpublished');
             }
 
+            if (!empty($citation->metadata->chapter)) {
+                $citation->chapter = html_writer::span($citation->metadata->chapter, 'citationchapter');
+            }
+
             if (!empty($citation->secondary_type->desc)) {
                 $citation->resourcetype = html_writer::span($citation->secondary_type->desc, 'citationresourcetype');
             }
@@ -1044,6 +1048,10 @@ class leganto {
             $html = rtrim($html, ', ');
         }
         $html .= html_writer::end_div();
+
+        if (!empty($citation->chapter)) {
+            $html .= html_writer::div(get_string('citationchapter', 'leganto', $citation->chapter));
+        }
 
         $html .= html_writer::start_div();
         if (!empty($citation->resourcetype)) {
