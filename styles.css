@@ -131,6 +131,11 @@ div.legantobox ul.citations li.citation a.citationlink:active {
     text-decoration: none;
 }
 
+#page-mod-leganto-view ul.citations li.citation span.citationchapter,
+div.legantobox ul.citations li.citation span.citationchapter {
+    font-style: italic;
+}
+
 #page-mod-leganto-view ul.citations li.citation span.citationresourcetype,
 div.legantobox ul.citations li.citation span.citationresourcetype {
     font-size: 0.9em;
