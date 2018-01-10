@@ -84,10 +84,10 @@ class leganto {
     private $apiconfigured = false;
 
     /** @var string Regular expression matching a leganto section id. */
-    private $sectionidregex = '/^section-[0-9]{16}$/';
+    private $sectionidregex = '/^section-[0-9]{16,}$/';
 
     /** @var string Regular expression matching a leganto citation id. */
-    private $citationidregex = '/^citation-[0-9]{16}$/';
+    private $citationidregex = '/^citation-[0-9]{16,}$/';
 
     /**
      * Constructor for the base leganto class.
@@ -820,7 +820,7 @@ class leganto {
      * @return string A JSON encoded list of selected citations.
      */
     public function get_citations($formdata) {
-        $citationpathregex = '/^course-[0-9]{16}_list-[0-9]{16}_section-[0-9]{16}_citation-[0-9]{16}$/';
+        $citationpathregex = '/^course-[0-9]{16,}_list-[0-9]{16,}_section-[0-9]{16,}_citation-[0-9]{16,}$/';
 
         $selected = array();
         foreach ($formdata as $name => $value) {
