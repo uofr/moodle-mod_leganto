@@ -846,12 +846,10 @@ class leganto {
      * @return array A list of citation paths.
      */
     public function get_selected_citations() {
-        global $DB;
-
-        if (!$coursemodule = $this->get_course_module()) {
+        if (!$this->has_instance()) {
             return array();
         }
-        if (!$config = $DB->get_field('leganto', 'citations', array('id' => $coursemodule->instance))) {
+        if (!$config = $this->get_instance()->citations) {
             return array();
         }
         if (!$tree = json_decode($config)) {
