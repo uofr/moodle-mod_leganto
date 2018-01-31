@@ -101,6 +101,9 @@ class mod_leganto_mod_form extends moodleform_mod {
         $mform->addHelpButton('display', 'display', 'leganto');
         $mform->setDefault('display', $adminconfig->defaultdisplay);
 
+        $mform->addElement('advcheckbox', 'displaynotes', get_string('displaypublicnotes', 'leganto'));
+        $mform->addHelpButton('displaynotes', 'displaypublicnotes', 'leganto');
+
         // Common elements section.
         $this->standard_coursemodule_elements();
 
