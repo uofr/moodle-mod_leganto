@@ -792,6 +792,10 @@ class leganto {
                 }
             }
 
+            if (!empty($citation->public_note)) {
+                $citation->note = html_writer::span(ucfirst(trim($citation->public_note)), 'citationnote');
+            }
+
             if (!empty($citation->metadata->source)) {
                 $buttonhref = $citation->metadata->source;
                 $buttonlabel = get_string('viewonline', 'leganto');
@@ -1063,6 +1067,10 @@ class leganto {
             $html = rtrim($html);
         }
         $html .= html_writer::end_div();
+
+        if (!empty($this->get_instance()->displaynotes) && !empty($citation->note)) {
+            $html .= html_writer::div(get_string('citationnote', 'leganto', $citation->note));
+        }
         $html .= html_writer::end_tag('li');
 
         return $html;

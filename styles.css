@@ -183,6 +183,11 @@ div.legantobox ul.citations li.citation span.citationtag {
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
 }
 
+#page-mod-leganto-view ul.citations li.citation span.citationnote,
+div.legantobox ul.citations li.citation span.citationnote {
+    font-style: italic;
+}
+
 #page-mod-leganto-view ul.citations li.citation a.citationsource,
 div.legantobox ul.citations li.citation a.citationsource {
     color: #fff;

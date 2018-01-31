@@ -48,7 +48,7 @@ class backup_leganto_activity_structure_step extends backup_activity_structure_s
 
         // Define each element separated.
         $leganto = new backup_nested_element('leganto', array('id'), array('name', 'intro', 'introformat', 'timemodified',
-                'display', 'citations'));
+                'display', 'citations', 'displaynotes'));
 
         // Build the tree.
         // (nice mono-tree, lol).

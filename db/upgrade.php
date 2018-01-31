@@ -39,5 +39,20 @@ function xmldb_leganto_upgrade($oldversion) {
     // Moodle v3.1.0 release upgrade line.
     // Put any upgrade step following this.
 
+    if ($oldversion < 2018012900) {
+
+        // Add a 'displaynotes' field to the 'leganto' table.
+        $table = new xmldb_table('leganto');
+        $field = new xmldb_field('displaynotes', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, 0, 'citations');
+
+        // Conditionally launch add field.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Leganto savepoint reached.
+        upgrade_mod_savepoint(true, 2018012900, 'leganto');
+    }
+
     return true;
 }

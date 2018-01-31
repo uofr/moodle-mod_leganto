@@ -14,6 +14,7 @@
         <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="The time the settings for this Leganto instance were last modified."/>
         <FIELD NAME="display" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="The display type of the Leganto contents - on a separate page or inline."/>
         <FIELD NAME="citations" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="A comma separated list of selected Leganto reading list citations."/>
+        <FIELD NAME="displaynotes" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Whether or not to display public notes associated with selected citations."/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="The unique id for this Leganto instance."/>
