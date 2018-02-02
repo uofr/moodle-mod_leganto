@@ -126,10 +126,9 @@ class mod_leganto_mod_form extends moodleform_mod {
 
         foreach ($lists as $list) {
             $mform->addElement('header', 'list-' . $listindex, get_string('selectcitations', 'leganto', $list->name));
-            $mform->setExpanded('list-' . $listindex, false);
-            $listindex++;
 
             $sectionid = '';
+            $expandlist = false;
             foreach ($list->citations->citation as $citation) {
                 if (!empty($citation->section_info->id) && $citation->section_info->id != $sectionid) {
                     // This is a new section, so fetch its data and set up its elements.
@@ -144,9 +143,13 @@ class mod_leganto_mod_form extends moodleform_mod {
                 // Fetch citation data and set up its elements.
                 $parentpath = 'course-' . $list->courseid . '_list-' . $list->id . '_section-' . $sectionid;
                 if ($citationdata = $this->leganto->get_citation_data($list, $citation->id, $parentpath)) {
-                    $this->setup_citation_elements($mform, $checkboxgrp, $citationdata, $selected);
+                    $expandlist = $this->setup_citation_elements($mform, $checkboxgrp, $citationdata, $selected) || $expandlist;
                 }
             }
+
+            // Expand list fieldset automatically if any of its citations were pre-selected.
+            $mform->setExpanded('list-' . $listindex, $expandlist);
+            $listindex++;
         }
 
         // If only one reading list was found, expand its fieldset automatically.
@@ -162,6 +165,7 @@ class mod_leganto_mod_form extends moodleform_mod {
      * @param int $checkboxgrp The current checkbox group id.
      * @param stdClass $citation The citation data to set up.
      * @param array $selected A list of previously selected citations.
+     * @return bool Whether or not this citation was pre-selected.
      */
     private function setup_citation_elements(&$mform, $checkboxgrp, $citation, $selected) {
         $adminconfig = $this->leganto->get_admin_config();
@@ -183,6 +187,8 @@ class mod_leganto_mod_form extends moodleform_mod {
         }
         $mform->addElement('advcheckbox', $citation->path, null, $label, array('group' => $checkboxgrp - 1));
         $mform->setDefault($citation->path, $default);
+
+        return !empty($default);
     }
 
     /**
