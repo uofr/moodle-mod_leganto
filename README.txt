@@ -33,6 +33,12 @@ visibility).
 Changelog
 ---------
 
+2018-01-30  v3.1.1, v3.3.1
+  * Display chapter titles for citations of type 'Book Chapter'
+  * Support course/list/section/citation ids of > 16 characters
+  * Add option to include public notes in citation display
+  * Expand list fieldset if it contains pre-selected citations
+
 2017-09-29  v3.1.0, v3.3.0
   * Initial stable release
 
