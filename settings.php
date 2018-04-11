@@ -37,7 +37,8 @@ if ($ADMIN->fulltree) {
     // Display settings.
     $optionsdd = array();
     $optionsdd[0] = get_string('displaypage', 'leganto');
-    $optionsdd[1] = get_string('displayinline', 'leganto');
+    $optionsdd[1] = get_string('displayinlinecollapsed', 'leganto');
+    $optionsdd[2] = get_string('displayinlineexpanded', 'leganto');
     $settings->add(new admin_setting_configselect('leganto/defaultdisplay', get_string('defaultdisplay', 'leganto'),
             get_string('defaultdisplay_desc', 'leganto'), 0, $optionsdd));
 

@@ -24,7 +24,7 @@
 
 M.mod_leganto = {};
 
-M.mod_leganto.initList = function(Y, cmid, url) {
+M.mod_leganto.initList = function(Y, cmid, url, expanded) {
     Y.use('node', 'transition', function(Y) {
         /**
          * Set relative position style for a list node.
@@ -54,11 +54,13 @@ M.mod_leganto.initList = function(Y, cmid, url) {
         var listid = '#leganto-' + cmid,
             arrowid = '#showhide-' + cmid;
 
-        // Hide list if JS enabled.
-        Y.one(listid).hide('slideFadeOut');
-        // Have to hide again without transition to get display: none.
-        Y.one(listid).hide();
-        Y.one(arrowid).addClass('collapsed');
+        // Hide list if not expanded by default.
+        if (!expanded) {
+            Y.one(listid).hide('slideFadeOut');
+            // Have to hide again without transition to get display: none.
+            Y.one(listid).hide();
+            Y.one(arrowid).addClass('collapsed');
+        }
 
         Y.delegate('click', function(e) {
             if (e.currentTarget.ancestor('div').hasClass('activityinstance')) {

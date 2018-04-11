@@ -64,12 +64,13 @@ class mod_leganto_renderer extends plugin_renderer_base {
         }
 
         $legantolist = new leganto_list($leganto, $cm);
-        if ($leganto->display == LEGANTO_DISPLAY_INLINE) {
+        if ($leganto->display != LEGANTO_DISPLAY_PAGE) {
             $viewlink = (string) $cm->url;
+            $expanded = $leganto->display == LEGANTO_DISPLAY_INLINE_EXPANDED;
             $listid = $cm->modname . '-' . $cm->id;
 
             // YUI function to hide inline reading list until user clicks 'view' link.
-            $this->page->requires->js_init_call('M.mod_leganto.initList', array($cm->id, $viewlink));
+            $this->page->requires->js_init_call('M.mod_leganto.initList', array($cm->id, $viewlink, $expanded));
             $output .= $this->output->box($this->render($legantolist), 'generalbox legantobox', $listid);
         } else {
             $output .= $this->output->box($this->render($legantolist), 'generalbox', 'leganto');

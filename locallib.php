@@ -735,7 +735,7 @@ class leganto {
      * @param int $display The list display mode (inline or separate page).
      * @return stdClass|bool An object containing the citation data, or false.
      */
-    public function get_citation_data($list, $citationid, $parentpath = '', $display = LEGANTO_DISPLAY_INLINE) {
+    public function get_citation_data($list, $citationid, $parentpath = '', $display = null) {
         global $OUTPUT;
 
         if (empty($list->citations->citation)) {
@@ -748,13 +748,13 @@ class leganto {
             }
 
             $title = !empty($citation->metadata->title) ? $citation->metadata->title : $citation->metadata->article_title;
-            $headinglevel = $display == LEGANTO_DISPLAY_PAGE ? 4 : 5;
+            $headinglevel = !is_null($display) && $display == LEGANTO_DISPLAY_PAGE ? 4 : 5;
             $citation->title = $OUTPUT->heading($title, $headinglevel, 'citationtitle');
             if (!empty($citation->leganto_permalink)) {
                 $permalink = str_replace('auth=local', 'auth=SAML', $citation->leganto_permalink);
                 $linkaction = new popup_action('click', $permalink, 'popup', array('width' => 1024, 'height' => 768));
                 $linktitle = get_string('viewcitation', 'leganto');
-                $linkclass = $display == LEGANTO_DISPLAY_PAGE ? ' fa-lg' : '';
+                $linkclass = !is_null($display) && $display == LEGANTO_DISPLAY_PAGE ? ' fa-lg' : '';
                 $citation->permalink = $OUTPUT->action_link($permalink, ' ', $linkaction,
                         array('class' => 'fa fa-external-link citationlink' . $linkclass, 'title' => $linktitle));
             }
@@ -985,7 +985,7 @@ class leganto {
      * @param int $citationcount A count of citations belonging to the section.
      * @return string The HTML output for the section heading and details.
      */
-    public function get_section_html($list, $sectionid, $display = LEGANTO_DISPLAY_INLINE, $citationcount = null) {
+    public function get_section_html($list, $sectionid, $display = null, $citationcount = null) {
         global $OUTPUT;
 
         if (!$section = $this->get_section_data($list, $sectionid)) {
@@ -1004,7 +1004,7 @@ class leganto {
         }
 
         $headingstr = get_string('sectionheading', 'leganto', array('name' => $section->name, 'count' => $countspan));
-        $headinglevel = $display == LEGANTO_DISPLAY_PAGE ? 3 : 4;
+        $headinglevel = !is_null($display) && $display == LEGANTO_DISPLAY_PAGE ? 3 : 4;
         $heading = $OUTPUT->heading($headingstr, $headinglevel, 'sectionheading');
         $description = !empty($section->description) ? $section->description : '';
         $html = $heading . $description;

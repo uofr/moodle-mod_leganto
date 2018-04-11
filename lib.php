@@ -28,7 +28,8 @@ defined('MOODLE_INTERNAL') || die();
 /** Display leganto contents on a separate page. */
 define('LEGANTO_DISPLAY_PAGE', 0);
 /** Display leganto contents inline in a course. */
-define('LEGANTO_DISPLAY_INLINE', 1);
+define('LEGANTO_DISPLAY_INLINE_COLLAPSED', 1);
+define('LEGANTO_DISPLAY_INLINE_EXPANDED', 2);
 
 /**
  * List of features supported in leganto module.
@@ -196,7 +197,7 @@ function leganto_get_coursemodule_info($cm) {
     }
     $cminfo = new cached_cm_info();
     $cminfo->name = $leganto->name;
-    if ($leganto->display == LEGANTO_DISPLAY_INLINE) {
+    if ($leganto->display != LEGANTO_DISPLAY_PAGE) {
         // Prepare leganto object to store in customdata.
         $fdata = new stdClass();
         if ($cm->showdescription && strlen(trim($leganto->intro))) {
@@ -205,6 +206,7 @@ function leganto_get_coursemodule_info($cm) {
                 $fdata->introformat = $leganto->introformat;
             }
         }
+        $fdata->display = $leganto->display;
         $fdata->citations = $leganto->citations;
         $cminfo->customdata = $fdata;
     } else {
@@ -240,7 +242,7 @@ function leganto_cm_info_dynamic(cm_info $cm) {
 
 /**
  * Overwrites the content in the course-module object with the leganto content
- * if leganto.display == LEGANTO_DISPLAY_INLINE.
+ * if leganto.display != LEGANTO_DISPLAY_PAGE.
  *
  * @param cm_info $cm
  */
@@ -254,7 +256,6 @@ function leganto_cm_info_view(cm_info $cm) {
         $leganto = $cm->customdata;
         $leganto->id = (int)$cm->instance;
         $leganto->course = (int)$cm->course;
-        $leganto->display = LEGANTO_DISPLAY_INLINE;
         $leganto->name = $cm->name;
         if (empty($leganto->intro)) {
             $leganto->intro = '';

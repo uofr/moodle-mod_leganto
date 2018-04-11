@@ -95,8 +95,9 @@ class mod_leganto_mod_form extends moodleform_mod {
 
         $mform->addElement('select', 'display', get_string('display', 'leganto'),
                 array(
-                    LEGANTO_DISPLAY_PAGE   => get_string('displaypage', 'leganto'),
-                    LEGANTO_DISPLAY_INLINE => get_string('displayinline', 'leganto')
+                    LEGANTO_DISPLAY_PAGE             => get_string('displaypage', 'leganto'),
+                    LEGANTO_DISPLAY_INLINE_COLLAPSED => get_string('displayinlinecollapsed', 'leganto'),
+                    LEGANTO_DISPLAY_INLINE_EXPANDED  => get_string('displayinlineexpanded', 'leganto')
                 ));
         $mform->addHelpButton('display', 'display', 'leganto');
         $mform->setDefault('display', $adminconfig->defaultdisplay);

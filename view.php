@@ -60,7 +60,7 @@ $context = context_module::instance($cm->id);
 require_capability('mod/leganto:view', $context);
 
 // Redirect only if page was not requested via AJAX.
-if ($leganto->display == LEGANTO_DISPLAY_INLINE && !$ajaxrequest) {
+if ($leganto->display != LEGANTO_DISPLAY_PAGE && !$ajaxrequest) {
     redirect(course_get_url($leganto->course, $cm->sectionnum));
 }
 
