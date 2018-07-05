@@ -83,6 +83,7 @@ $string['page-mod-leganto-view'] = 'Reading list module main page';
 $string['page-mod-leganto-x'] = 'Any reading list module page';
 $string['pluginadministration'] = 'Leganto reading list administration';
 $string['pluginname'] = 'Leganto reading list';
+$string['privacy:metadata'] = 'The Leganto reading list module does not store any personal data';
 $string['requiremodintro'] = 'Require reading list description';
 $string['requiremodintro_desc'] = 'Enable this option if you want to force users to enter a description for each reading list.';
 $string['sectionheading'] = '{$a->name} {$a->count}';
