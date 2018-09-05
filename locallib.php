@@ -747,7 +747,20 @@ class leganto {
                 continue;
             }
 
-            $title = !empty($citation->metadata->title) ? $citation->metadata->title : $citation->metadata->article_title;
+            if (!empty($citation->metadata->chapter_title)) {
+                $title = $citation->metadata->chapter_title;
+                if (!empty($citation->metadata->chapter_author)) {
+                    $citation->author = html_writer::span($citation->metadata->chapter_author, 'citationauthor');
+                    if (!empty($citation->metadata->author)) {
+                        $citation->bookauthor = html_writer::span($citation->metadata->author, 'citationbookauthor');
+                    }
+                }
+                if (!empty($citation->metadata->title)) {
+                    $citation->booktitle = html_writer::span($citation->metadata->title, 'citationbooktitle');
+                }
+            } else {
+                $title = !empty($citation->metadata->title) ? $citation->metadata->title : $citation->metadata->article_title;
+            }
             $headinglevel = !is_null($display) && $display == LEGANTO_DISPLAY_PAGE ? 4 : 5;
             $citation->title = $OUTPUT->heading($title, $headinglevel, 'citationtitle');
             if (!empty($citation->leganto_permalink)) {
@@ -759,7 +772,7 @@ class leganto {
                         array('class' => 'fa fa-external-link citationlink' . $linkclass, 'title' => $linktitle));
             }
 
-            if (!empty($citation->metadata->author)) {
+            if (empty($citation->author) && !empty($citation->metadata->author)) {
                 $citation->author = html_writer::span($citation->metadata->author, 'citationauthor');
             }
 
@@ -775,7 +788,7 @@ class leganto {
                 $citation->published = html_writer::span($citation->metadata->publication_date, 'citationpublished');
             }
 
-            if (!empty($citation->metadata->chapter)) {
+            if (empty($citation->booktitle) && !empty($citation->metadata->chapter)) {
                 $citation->chapter = html_writer::span($citation->metadata->chapter, 'citationchapter');
             }
 
@@ -1051,7 +1064,12 @@ class leganto {
         }
         $html .= html_writer::end_div();
 
-        if (!empty($citation->chapter)) {
+        if (!empty($citation->booktitle)) {
+            $html .= html_writer::div(get_string('citationbooktitle', 'leganto', $citation->booktitle));
+            if (!empty($citation->bookauthor)) {
+                $html .= html_writer::div(get_string('citationbookauthor', 'leganto', $citation->bookauthor));
+            }
+        } else if (!empty($citation->chapter)) {
             $html .= html_writer::div(get_string('citationchapter', 'leganto', $citation->chapter));
         }
 
