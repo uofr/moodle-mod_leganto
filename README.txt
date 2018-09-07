@@ -33,6 +33,12 @@ visibility).
 Changelog
 ---------
 
+2018-09-07  v3.5.0
+  * Add option to display list content inline and auto-expanded
+  * Redirect to the list rather than just the course section
+  * Add null privacy provider for GDPR support
+  * Add support for new chapter metadata attributes in API
+
 2018-01-30  v3.1.1, v3.3.1
   * Display chapter titles for citations of type 'Book Chapter'
   * Support course/list/section/citation ids of > 16 characters
