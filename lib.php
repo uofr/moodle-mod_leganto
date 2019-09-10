@@ -265,6 +265,6 @@ function leganto_cm_info_view(cm_info $cm) {
         }
         // Display leganto.
         $renderer = $PAGE->get_renderer('mod_leganto');
-        $cm->set_content($renderer->display_leganto($leganto));
+        $cm->set_content($renderer->display_leganto($leganto), true);
     }
 }
