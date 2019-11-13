@@ -37,7 +37,7 @@ M.mod_leganto.initList = function(Y, cmid, url, expanded) {
         Y.Transition.fx.slideFadeOut = {
             opacity: 0,
             top: '-100px',
-            left: '-600px',
+            left: '0px',
             duration: 0.2,
             easing: 'ease-out',
             on: {start: setRelativePosition}
