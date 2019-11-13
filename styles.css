@@ -226,3 +226,7 @@ div.legantobox ul.citations li.citation a.citationsource:active {
 .section .activity.leganto .contentafterlink {
     margin-top: 0;
 }
+
+.section .activity.leganto .activityinstance a {
+	display: inline-block;
+}
