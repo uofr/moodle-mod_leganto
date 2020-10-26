@@ -79,7 +79,7 @@ class mod_leganto_mod_form extends moodleform_mod {
         $this->standard_intro_elements();
 
         // Citation selection section.
-        if ($lists = $this->leganto->get_lists($this->leganto->get_course())) {
+        if ($lists = $this->leganto->get_lists($this->leganto->get_course(), true)) {
             $this->setup_list_elements($mform, $lists);
         } else {
             $strcourse = strtolower(get_string('course'));
