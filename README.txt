@@ -33,6 +33,10 @@ visibility).
 Changelog
 ---------
 
+2020-10-27  v3.5.1
+  * Tell set_content() that list content is already formatted
+  * Reset cached list data when loading course module config
+
 2018-09-07  v3.5.0
   * Add option to display list content inline and auto-expanded
   * Redirect to the list rather than just the course section
