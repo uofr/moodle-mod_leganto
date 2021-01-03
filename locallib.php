@@ -623,9 +623,10 @@ class leganto {
      * Retrieve all Leganto reading lists associated with the current course.
      *
      * @param stdClass $course The data for the current course.
+     * @param bool $resetcache Whether to reset cached lists.
      * @return array An array of Leganto reading list objects.
      */
-    public function get_lists($course) {
+    public function get_lists($course, $resetcache = false) {
         $adminconfig = $this->get_admin_config();
         $codes = $this->get_codes($course);
 
@@ -635,6 +636,11 @@ class leganto {
             if (preg_match($yearregex, $course->idnumber, $year) || preg_match($yearregex, $course->shortname, $year)) {
                 $year = (!empty($year[1])) ? $year[1] : $year[0];
             }
+        }
+
+        // Initialise the cache if necessary.
+        if ($resetcache) {
+            $cache = cache::make('mod_leganto', 'listdata');
         }
 
         $lists = array();
@@ -663,6 +669,11 @@ class leganto {
                     $list->courseid = $courseid;
                     $listname = trim($list->name);
                     $lists[$listname] = $list;
+                    if ($resetcache) {
+                        if (!$cache->set($list->id, $list)) {
+                            debugging('Unable to reset cache, list data may be stale.', DEBUG_DEVELOPER);
+                        }
+                    }
                 }
             }
         }
