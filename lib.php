@@ -23,8 +23,6 @@
  * @author     Tony Butler <a.butler4@lancaster.ac.uk>
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 /** Display leganto contents on a separate page. */
 define('LEGANTO_DISPLAY_PAGE', 0);
 /** Display leganto contents inline in a course. */
@@ -41,6 +39,8 @@ function leganto_supports($feature) {
     switch($feature) {
         case FEATURE_MOD_ARCHETYPE:
             return MOD_ARCHETYPE_RESOURCE;
+        case FEATURE_MOD_PURPOSE:
+            return MOD_PURPOSE_CONTENT;
         case FEATURE_GROUPS:
             return false;
         case FEATURE_GROUPINGS:
@@ -182,8 +182,8 @@ function leganto_page_type_list($pagetype, $parentcontext, $currentcontext) {
  * information needed to print this activity in various places.
  *
  * If leganto needs to be displayed inline we store additional information
- * in customdata, so functions {@link leganto_cm_info_dynamic()} and
- * {@link leganto_cm_info_view()} do not need to do DB queries.
+ * in customdata, so functions {@see leganto_cm_info_dynamic()} and
+ * {@see leganto_cm_info_view()} do not need to do DB queries.
  *
  * @param cm_info $cm
  * @return cached_cm_info Cached course module info.
@@ -264,7 +264,8 @@ function leganto_cm_info_view(cm_info $cm) {
             $leganto->introformat = FORMAT_MOODLE;
         }
         // Display leganto.
-        $renderer = $PAGE->get_renderer('mod_leganto');
-        $cm->set_content($renderer->display_leganto($leganto), true);
+        if ($renderer = $PAGE->get_renderer('mod_leganto')) {
+            $cm->set_content($renderer->display_leganto($leganto), true);
+        }
     }
 }

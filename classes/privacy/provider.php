@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Defines {@link \mod_leganto\privacy\provider} class.
+ * Defines {@see \mod_leganto\privacy\provider} class.
  *
  * @package     mod_leganto
  * @category    privacy
@@ -24,8 +24,6 @@
  */
 
 namespace mod_leganto\privacy;
-
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Privacy API implementation for the Leganto resource lists plugin.

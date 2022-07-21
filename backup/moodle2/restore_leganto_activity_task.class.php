@@ -59,7 +59,7 @@ class restore_leganto_activity_task extends restore_activity_task {
      *
      * @return array
      */
-    static public function define_decode_contents() {
+    public static function define_decode_contents() {
         $contents = array();
 
         $contents[] = new restore_decode_content('leganto', array('intro'), 'leganto');
@@ -72,7 +72,7 @@ class restore_leganto_activity_task extends restore_activity_task {
      *
      * @return array
      */
-    static public function define_decode_rules() {
+    public static function define_decode_rules() {
         $rules = array();
 
         $rules[] = new restore_decode_rule('LEGANTOVIEWBYID', '/mod/leganto/view.php?id=$1', 'course_module');
@@ -82,12 +82,12 @@ class restore_leganto_activity_task extends restore_activity_task {
     }
 
     /**
-     * Define the restore log rules that will be applied by the {@link restore_logs_processor} when restoring
-     * leganto logs. It must return an array of {@link restore_log_rule} objects.
+     * Define the restore log rules that will be applied by the {@see restore_logs_processor} when restoring
+     * leganto logs. It must return an array of {@see restore_log_rule} objects.
      *
      * @return array
      */
-    static public function define_restore_log_rules() {
+    public static function define_restore_log_rules() {
         $rules = array();
 
         $rules[] = new restore_log_rule('leganto', 'add', 'view.php?id={course_module}', '{leganto}');
@@ -98,15 +98,15 @@ class restore_leganto_activity_task extends restore_activity_task {
     }
 
     /**
-     * Define the restore log rules that will be applied by the {@link restore_logs_processor} when restoring
-     * course logs. It must return an array of {@link restore_log_rule} objects.
+     * Define the restore log rules that will be applied by the {@see restore_logs_processor} when restoring
+     * course logs. It must return an array of {@see restore_log_rule} objects.
      *
      * Note these rules are applied when restoring course logs by the restore final task, but are defined here at
      * activity level. All them are rules not linked to any module instance (cmid = 0).
      *
      * @return array
      */
-    static public function define_restore_log_rules_for_course() {
+    public static function define_restore_log_rules_for_course() {
         $rules = array();
 
         $rules[] = new restore_log_rule('leganto', 'view all', 'index.php?id={course}', null);

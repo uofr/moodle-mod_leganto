@@ -23,10 +23,6 @@
  * @author     Tony Butler <a.butler4@lancaster.ac.uk>
  */
 
-#page-mod-leganto-mod .mform fieldset[id^="id_list-"] h4:first-child {
-    margin-top: 0;
-}
-
 #page-mod-leganto-mod .mform fieldset[id^="id_list-"] .fitem {
     margin-top: 10px;
 }
@@ -35,7 +31,6 @@
     color: #555;
     text-decoration: none;
     text-shadow: 0 1px 0 #fff;
-    background-color: #ededed;
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf));
     display: inline-block;
     padding: 3px 9px;
@@ -50,7 +45,6 @@
 
 #page-mod-leganto-mod .mform fieldset[id^="id_list-"] .fitem .felement[data-fieldtype="submit"] a:hover,
 #page-mod-leganto-mod .mform fieldset[id^="id_list-"] .fitem .felement[data-fieldtype="submit"] a:active {
-    background-color: #dfdfdf;
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed));
 }
 
@@ -68,14 +62,10 @@
     color: #555;
 }
 
-div.legantobox {
-    border: none;
-}
-
 #page-mod-leganto-view div.listsection,
 div.legantobox div.listsection {
     text-shadow: 0 1px 0 #fff;
-    margin: 1em 0;
+    margin: 1em 0 0;
     padding: 0.5em 1em;
     border: 1px solid #e3e3e3;
     background-color: #f5f5f5;
@@ -96,13 +86,13 @@ div.legantobox ul.citations {
 div.legantobox ul.citations li.citation {
     line-height: 1.5em;
     padding: 6px 0;
-    border-bottom: 1px solid #e3e3e3 !important;
-    list-style-type: none !important;
+    border-bottom: 1px solid #e3e3e3;
+    list-style-type: none;
 }
 
 #page-mod-leganto-view ul.citations li.citation:last-child,
 div.legantobox ul.citations li.citation:last-child {
-    border-bottom: none !important;
+    border-bottom: none;
 }
 
 #page-mod-leganto-view ul.citations li.citation + li.citation,
@@ -110,7 +100,7 @@ div.legantobox ul.citations li.citation + li.citation {
     border-top: 1px solid #fff;
 }
 
-#page-mod-leganto-view ul.citations li.citation h4.citationtitle,
+#page-mod-leganto-view ul.citations li.citation h3.citationtitle,
 div.legantobox ul.citations li.citation h5.citationtitle {
     display: inline;
 }
@@ -209,10 +199,8 @@ div.legantobox ul.citations li.citation a.citationsource:active {
 
 .leganto .showhidearrow {
     background: url([[pix:core|t/expanded]]);
-    margin-left: 3px;
     width: 16px;
     height: 16px;
-    vertical-align: text-bottom;
     -webkit-transition: -webkit-transform 0.2s;
     transition: transform 0.2s;
 }
