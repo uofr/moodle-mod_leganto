@@ -14,36 +14,42 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+namespace mod_leganto\output;
+
+use cm_info;
+use context;
+use context_module;
+use renderable;
+use stdClass;
+
 /**
- * Capability definitions for the leganto module.
+ * Leganto list renderable class.
  *
  * @package    mod_leganto
  * @copyright  2017 Lancaster University {@link http://www.lancaster.ac.uk/}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author     Tony Butler <a.butler4@lancaster.ac.uk>
  */
+class leganto_list implements renderable {
 
-defined('MOODLE_INTERNAL') || die();
+    /** @var context The context of the course module for this leganto_list instance. */
+    public $context;
 
-$capabilities = [
+    /** @var stdClass The leganto database record for this leganto_list instance. */
+    public $leganto;
 
-    'mod/leganto:addinstance' => [
-        'riskbitmask' => RISK_XSS,
-        'captype' => 'write',
-        'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => [
-            'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW,
-        ],
-        'clonepermissionsfrom' => 'moodle/course:manageactivities',
-    ],
+    /** @var cm_info The course module info object for this leganto_list instance. */
+    public $cm;
 
-    'mod/leganto:view' => [
-        'captype' => 'read',
-        'contextlevel' => CONTEXT_MODULE,
-        'archetypes' => [
-            'guest' => CAP_ALLOW,
-            'user' => CAP_ALLOW,
-        ],
-    ],
-];
+    /**
+     * Constructor for the leganto_list class.
+     *
+     * @param stdClass $leganto The leganto record.
+     * @param cm_info $cm The course module info.
+     */
+    public function __construct($leganto, $cm) {
+        $this->leganto = $leganto;
+        $this->cm = $cm;
+        $this->context = context_module::instance($cm->id);
+    }
+}
